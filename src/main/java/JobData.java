@@ -1,7 +1,7 @@
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-
+//test AGAIN
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -79,7 +79,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -94,14 +94,17 @@ public class JobData {
      * @return      List of all jobs with at least one field containing the value
      */
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
-
-        // load data, if not already loaded
         loadData();
-
-        // TODO - implement this method
-        return null;
+        ArrayList <HashMap<String, String>> jobs = new ArrayList<>();
+        for (HashMap<String, String> row: allJobs){
+            for (HashMap.Entry<String, String> job: row.entrySet()){
+                if (job.getValue().toUpperCase().contains(value) && !jobs.contains(row)){
+                    jobs.add(row);
+                }
+            }
+        }
+        return jobs;
     }
-
     /**
      * Read in data from a CSV file and store it in a list
      */
